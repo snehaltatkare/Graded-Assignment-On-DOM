@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #DADDB1;
+    }
+
+    .countdown-box {
+      background-color: #94ADD7;
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+      border: 4px solid #0D3F67; 
+    }
+
+    .countdown {
+      font-size: 64px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #141E46;
+      animation: countdown-animation 5s ease-in-out infinite;
+    }
+
+    @keyframes countdown-animation {
+  0% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+    .button-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      background-color: #B0578D;
+      color: #071952;
+      border: px solid #0D3F67;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #D2E0FB;
+      transform: scale(1.05);
+    }
+
+    button:disabled {
+      background-color: #E5CFF7;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="countdown-box">
+    <div class="countdown" id="countdown">5</div>
+    <div class="button-container">
+      <button id="startButton" onclick="startCountdown()">Start</button>
+      <button id="replayButton" onclick="resetCountdown()" disabled>Replay</button>
+    </div>
+  </div>
+
+  <script>
+    var countdownElement = document.getElementById("countdown");
+    var replayButton = document.getElementById("replayButton");
+    var startButton = document.getElementById("startButton");
+    var countdownInterval;
+
+    function startCountdown() {
+      if (!startButton.disabled) {
+        startButton.disabled = true;
+        var count = 5;
+        countdownElement.textContent = count;
+
+        replayButton.disabled = true;
+
+        countdownInterval = setInterval(function () {
+          count--;
+          countdownElement.textContent = count;
+
+          if (count == 0) {
+            clearInterval(countdownInterval);
+            countdownElement.textContent = "Go";
+            replayButton.disabled = false;
+          }
+        }, 1000);
+      }
+    }
+
+    function resetCountdown() {
+      clearInterval(countdownInterval);
+      countdownElement.textContent = "5";
+      replayButton.disabled = true;
+      startButton.disabled = false;
+    }
+  </script>
+</body>
+</html>

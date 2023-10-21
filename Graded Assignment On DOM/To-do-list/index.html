@@ -1,0 +1,156 @@
+<html>
+<head>
+    <style>
+        body {
+          font-family: 'Times New Roman', sans-serif;
+          background-color: #BEFFF7;
+          margin: 0;
+          padding: 0;
+          text-align: center;
+        }
+    
+        h1 {
+          background-color: #7C81AD;
+          color: #141E46;
+          margin: 0;
+          padding: 20px;
+          
+        }
+    
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+    
+        li {
+          background-color: #fff;
+          padding: 10px;
+          margin: 10px 0;
+          border-radius: 5px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        .completed {
+          text-decoration: line-through;
+          background-color: #d3d3d3;
+        
+        }
+    
+        input[type="text"] {
+          width: 100%;
+          padding: 10px;
+        }
+    
+        button {
+          background-color: #333;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+    
+        button:hover {
+          background-color: #555;
+        }
+    
+        p {
+          font-size: 25px;
+          margin: 10px;
+        }
+    
+        span {
+          font-weight: bold;
+        }
+
+        li {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+   
+      </style>
+</head>
+<body>
+    <h1>To-do List</h1>
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+    <p>Total Tasks: <span id="totalTasks">0</span></p>
+    <p>Total Completed Tasks: <span id="completedTasks">0</span></p>
+  
+    <script>
+      var taskInput = document.getElementById("taskInput");
+      var taskList = document.getElementById("taskList");
+      var totalTasksElement = document.getElementById("totalTasks");
+      var completedTasksElement = document.getElementById("completedTasks");
+      var totalTasks = 0;
+      var completedTasks = 0;
+  
+      function addTask() {
+        var taskText = taskInput.value;
+        if (taskText.trim() === "") {
+          return;
+        }
+  
+        var li = document.createElement("li");
+        li.textContent = taskText;
+  
+        
+        var completeButton = document.createElement("button");
+        completeButton.textContent = "Complete";
+        completeButton.addEventListener("click", function() {
+          toggleCompleted(li);
+        });
+        li.appendChild(completeButton);
+  
+        
+        var removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.addEventListener("click", function() {
+          removeTask(li);
+        });
+  
+        li.appendChild(removeButton);
+        taskList.appendChild(li);
+  
+        totalTasks++;
+        totalTasksElement.textContent = totalTasks;
+  
+        taskInput.value = "";
+      }
+  
+      function removeTask(li) {
+        taskList.removeChild(li);
+  
+        totalTasks--;
+        totalTasksElement.textContent = totalTasks;
+  
+        if (li.classList.contains("completed")) {
+          completedTasks--;
+          completedTasksElement.textContent = completedTasks;
+        }
+      }
+  
+      taskList.addEventListener("click", function(event) {
+        var target = event.target;
+        if (target.tagName === "LI") {
+          toggleCompleted(target);
+        }
+      });
+  
+      function toggleCompleted(li) {
+        li.classList.toggle("completed");
+  
+        if (li.classList.contains("completed")) {
+          completedTasks++;
+        } else {
+          completedTasks--;
+        }
+  
+        completedTasksElement.textContent = completedTasks;
+      }
+    </script>
+  </body>
+</html>
